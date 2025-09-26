@@ -7,79 +7,141 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .font-serif { font-family: 'Tinos', serif; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3b82f6; border-radius: 50%; width: 32px; height: 32px; animation: spin 1s linear infinite; }
+        body { font-family: 'Lato', sans-serif; }
+        .font-serif { font-family: 'Merriweather', serif; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #FF0000; border-radius: 50%; width: 32px; height: 32px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @media print { body * { visibility: hidden; } #result-card, #result-card * { visibility: visible; } #result-card { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; } #download-btn { display: none; } }
+        @media print { body * { visibility: hidden; } #result-card, #result-card * { visibility: visible; } #result-card { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; } #download-btn, #announcements-section, header, #result-form-wrapper { display: none; } }
+        
+        #result-card {
+            background-color: #ffffff;
+            border: 10px solid #282828;
+            padding: 2rem;
+            position: relative;
+        }
+        #result-card::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 2px solid #FF0000;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-200">
     <div class="container mx-auto p-4 md:p-8 max-w-4xl">
         <header class="text-center mb-8">
             <img id="header-school-logo" src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" alt="School Logo" class="h-24 w-24 mx-auto mb-4">
             <h1 id="header-school-name" class="text-4xl font-extrabold text-gray-800">School Result Portal</h1>
             <p class="text-gray-500 mt-2">Enter your roll number to view your examination result.</p>
         </header>
-        <div class="bg-white p-6 rounded-2xl shadow-md mb-8">
+        <div id="result-form-wrapper" class="bg-white p-6 rounded-2xl shadow-md mb-8">
             <form id="result-form" class="flex flex-col sm:flex-row items-center gap-4">
-                <input type="text" id="roll-number-input" placeholder="Enter Your Roll Number" class="w-full px-4 py-3 text-gray-700 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" required>
-                <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Check Result</button>
+                <input type="text" id="roll-number-input" placeholder="Enter Your Roll Number" class="w-full px-4 py-3 text-gray-700 bg-gray-50 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition" required>
+                <button type="submit" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Check Result</button>
             </form>
         </div>
         <div id="loader" class="hidden justify-center items-center py-8"><div class="loader"></div></div>
         <div id="error-message" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-8" role="alert"><p class="font-bold">Error</p><p id="error-text"></p></div>
+        
         <div id="result-display" class="hidden">
-             <div id="result-card" class="bg-white p-8 rounded-xl shadow-2xl border border-gray-200 font-sans relative overflow-hidden">
-                <img id="school-logo-watermark" src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" class="absolute inset-0 m-auto w-2/3 h-auto object-contain opacity-5 z-0">
+             <div id="result-card">
+                <img id="school-logo-watermark" src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" class="absolute inset-0 m-auto w-1/2 h-auto object-contain opacity-5 z-0">
                 <div class="relative z-10">
-                    <div class="text-center pb-4 border-b-2 border-gray-300">
-                        <img id="school-logo" src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" alt="School Logo" class="h-20 w-20 mx-auto mb-2">
-                        <h2 id="school-name" class="text-3xl font-extrabold font-serif text-gray-800 tracking-wider">ELITE PUBLIC SCHOOL</h2>
-                        <p class="text-sm text-gray-500">123 Education Lane, Knowledge City, 12345</p>
-                        <p class="text-sm text-gray-500">Affiliated to Central Board of Secondary Education</p>
-                        <h3 class="text-xl font-bold text-white bg-gray-800 py-1 px-6 rounded-full inline-block mt-4">ACADEMIC REPORT CARD</h3>
-                        <p class="text-md font-semibold text-gray-600 mt-2">Session: 2024-2025</p>
+                    <div class="text-center mb-6">
+                        <img id="school-logo" src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" alt="School Logo" class="h-24 w-24 mx-auto">
+                        <h2 id="school-name" class="text-4xl font-serif font-bold mt-2" style="color: #282828;">ELITE PUBLIC SCHOOL</h2>
+                        <p class="text-gray-500 text-sm">123 Education Lane, Knowledge City, 12345</p>
+                        <p class="font-semibold text-xl mt-4" style="color: #282828;">ANNUAL PROGRESS REPORT</p>
+                        <p class="font-semibold text-gray-700">SESSION: 2024-2025</p>
                     </div>
-                    <div class="mt-6">
-                        <h4 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Student Profile</h4>
-                        <div class="flex justify-between items-center">
-                            <div class="grid grid-cols-2 gap-x-8 gap-y-4 text-sm w-full">
-                                <div><p class="text-gray-500">Student Name</p><p id="student-name" class="font-semibold text-gray-800 text-base"></p></div>
-                                <div><p class="text-gray-500">Father's Name</p><p id="student-father-name" class="font-semibold text-gray-800 text-base"></p></div>
-                                <div><p class="text-gray-500">Class</p><p id="student-class" class="font-semibold text-gray-800 text-base"></p></div>
-                                <div><p class="text-gray-500">Roll Number</p><p id="student-roll" class="font-semibold text-gray-800 text-base"></p></div>
-                            </div>
-                            <img id="student-photo" src="https://placehold.co/120x120/e2e8f0/e2e8f0?text=" alt="Student Photo" class="w-28 h-32 rounded-lg object-cover border-4 border-white shadow-lg ml-8 flex-shrink-0">
+                    
+                    <div class="text-sm mt-8 p-4 bg-red-50/50 rounded-lg border-l-4 border-red-200 flex justify-between items-center">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4 flex-grow">
+                            <div><p class="text-gray-600 font-semibold">STUDENT NAME</p><p id="student-name" class="font-bold text-base text-gray-800"></p></div>
+                            <div><p class="text-gray-600 font-semibold">FATHER'S NAME</p><p id="student-father-name" class="font-bold text-base text-gray-800"></p></div>
+                            <div><p class="text-gray-600 font-semibold">CLASS</p><p id="student-class" class="font-bold text-base text-gray-800"></p></div>
+                            <div><p class="text-gray-600 font-semibold">ROLL NUMBER</p><p id="student-roll" class="font-bold text-base text-gray-800"></p></div>
+                        </div>
+                        <div class="ml-8 flex-shrink-0">
+                            <img id="student-photo" src="https://placehold.co/120x150/e2e8f0/e2e8f0?text=Photo" alt="Student Photo" class="w-28 h-36 object-cover rounded-md border-4 border-white shadow-lg">
                         </div>
                     </div>
+
                     <div class="mt-8">
-                        <h4 class="text-lg font-bold text-gray-700 border-b pb-2 mb-4">Academic Performance</h4>
+                        <h3 class="font-serif font-bold text-xl mb-3 text-center tracking-wider" style="color: #282828;">ACADEMIC PERFORMANCE (SCHOLASTIC AREAS)</h3>
                         <table class="w-full text-sm">
-                            <thead class="bg-gray-800 text-white font-medium"><tr><th class="p-3 text-left tracking-wider">SUBJECT</th><th class="p-3 text-center tracking-wider">TOTAL MARKS</th><th class="p-3 text-center tracking-wider">MARKS OBTAINED</th></tr></thead>
-                            <tbody id="marks-body" class="divide-y divide-gray-200"></tbody>
-                            <tfoot class="bg-gray-200 font-bold"><tr><td class="p-3">TOTAL</td><td class="p-3 text-center" id="total-marks-sum"></td><td class="p-3 text-center" id="obtained-marks-sum"></td></tr></tfoot>
+                            <thead style="background-color: #282828;" class="text-white">
+                                <tr>
+                                    <th class="p-3 text-left font-semibold">SUBJECTS</th>
+                                    <th class="p-3 text-center font-semibold">TOTAL MARKS</th>
+                                    <th class="p-3 text-center font-semibold">MARKS OBTAINED</th>
+                                    <th class="p-3 text-center font-semibold">GRADE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="marks-body"></tbody>
+                            <tfoot class="font-bold" style="background-color: #fee2e2; color: #282828;">
+                                <tr>
+                                    <td class="p-3">GRAND TOTAL</td>
+                                    <td class="p-3 text-center" id="total-marks-sum"></td>
+                                    <td class="p-3 text-center" id="obtained-marks-sum"></td>
+                                    <td class="p-3 text-center">-</td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
-                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                         <div class="bg-gray-50 p-4 rounded-lg border flex flex-col justify-center items-center"><p class="text-sm font-semibold text-gray-600">Percentage</p><p id="percentage" class="font-bold text-3xl text-blue-600"></p></div>
-                         <div class="bg-gray-50 p-4 rounded-lg border flex flex-col justify-center items-center"><p class="text-sm font-semibold text-gray-600">Overall Grade</p><p id="grade" class="text-4xl font-extrabold text-blue-600"></p></div>
-                        <div class="bg-gray-50 p-4 rounded-lg flex flex-col justify-center items-center border"><p class="text-sm font-semibold text-gray-600">Result</p><p class="font-bold text-2xl px-6 py-1 rounded-full" id="final-result"></p></div>
+
+                    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="text-sm">
+                           <h3 class="font-serif font-bold text-lg mb-2" style="color: #282828;">ATTENDANCE RECORD</h3>
+                           <div class="grid grid-cols-2 gap-4 p-3 bg-gray-50 rounded-lg border">
+                               <div><p class="font-semibold">Total School Days:</p><p class="font-bold">220</p></div>
+                               <div><p class="font-semibold">Days Attended:</p><p class="font-bold">215</p></div>
+                           </div>
+                        </div>
+                        <div class="text-sm">
+                            <h3 class="font-serif font-bold text-lg mb-2" style="color: #282828;">GRADING SCALE</h3>
+                            <div class="grid grid-cols-3 gap-x-4 gap-y-1 text-xs">
+                                <span><strong>A+:</strong> 90-100%</span> <span><strong>A:</strong> 80-89%</span> <span><strong>B:</strong> 70-79%</span>
+                                <span><strong>C:</strong> 60-69%</span> <span><strong>D:</strong> 50-59%</span> <span><strong>F:</strong> &lt;50%</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-6"><h4 class="text-md font-bold text-gray-700">Grading System</h4><div class="text-xs text-gray-600 grid grid-cols-3 md:grid-cols-6 gap-x-4 gap-y-1 mt-2"><span><strong>A+:</strong> 90-100%</span><span><strong>A:</strong> 80-89%</span><span><strong>B:</strong> 70-79%</span><span><strong>C:</strong> 60-69%</span><span><strong>D:</strong> 50-59%</span><span><strong>E:</strong> 40-49%</span><span><strong>F:</strong> &lt;40% (Fail)</span></div></div>
-                    <div class="mt-8 pt-6 border-t-2 border-gray-300 text-xs text-gray-600">
-                        <div class="flex justify-between items-center">
-                            <div class="text-left"><p>Date of Issue: <span id="date-of-issue" class="font-semibold"></span></p></div>
-                            <div class="text-center"><img id="teacher-signature" class="h-12 mx-auto"><p class="font-semibold mt-1">Class Teacher's Signature</p></div>
-                            <div class="text-center"><img id="principal-signature" class="h-12 mx-auto"><p class="font-semibold mt-1">Principal's Signature</p></div>
+                    
+                    <div class="mt-8 text-center p-4 rounded-lg" style="background-color: #fee2e2;">
+                         <div class="grid grid-cols-3 divide-x-2 divide-red-300">
+                             <div><p class="font-semibold text-gray-600">Percentage</p><p id="percentage" class="font-bold text-2xl" style="color: #282828;"></p></div>
+                             <div><p class="font-semibold text-gray-600">Overall Grade</p><p id="grade" class="font-bold text-2xl" style="color: #282828;"></p></div>
+                             <div><p class="font-semibold text-gray-600">Result</p><p id="final-result" class="font-bold text-2xl"></p></div>
+                         </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center text-lg">
+                        <p class="font-semibold">Student is promoted to Class <span id="promoted-class" class="font-bold"></span>.</p>
+                    </div>
+
+                    <div class="mt-16 pt-6 text-sm">
+                        <div class="flex justify-between items-center text-center">
+                            <div><p class="font-semibold border-t-2 border-gray-400 pt-1 w-48">Class Teacher</p></div>
+                            <div><p class="font-semibold border-t-2 border-gray-400 pt-1 w-48">Principal</p></div>
+                            <div><p class="font-semibold">Date of Issue: <span id="date-of-issue"></span></p></div>
+                        </div>
+                         <div class="flex justify-between items-center text-center h-16 mt-2">
+                            <div class="w-48"><img id="teacher-signature" class="h-12 mx-auto"></div>
+                            <div class="w-48"><img id="principal-signature" class="h-12 mx-auto"></div>
+                            <div class="w-48"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-6"><button id="download-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">Download as PDF</button></div>
+            <div class="text-center mt-6"><button id="download-btn" class="text-white font-bold py-3 px-8 rounded-lg transition duration-300" style="background-color: #282828; hover: #000000;">Download as PDF</button></div>
         </div>
+        
         <div id="announcements-section" class="mt-12"><h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">Announcements</h2><div id="announcements-list" class="space-y-4"><p id="no-announcements" class="text-gray-500">No recent announcements.</p></div></div>
     </div>
 
@@ -109,6 +171,15 @@
         function showError(message) { errorText.textContent = message; errorMessage.classList.remove('hidden'); resultDisplay.classList.add('hidden'); }
         function hideError() { errorMessage.classList.add('hidden'); }
 
+        function calculateGrade(percentage) {
+            if (percentage >= 90) return 'A+';
+            if (percentage >= 80) return 'A';
+            if (percentage >= 70) return 'B';
+            if (percentage >= 60) return 'C';
+            if (percentage >= 50) return 'D';
+            return 'F';
+        }
+
         resultForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const rollNumber = rollNumberInput.value.trim();
@@ -128,31 +199,48 @@
                 document.getElementById('student-father-name').textContent = studentData.fatherName || 'N/A';
                 document.getElementById('student-roll').textContent = studentData.rollNumber || 'N/A';
                 document.getElementById('student-class').textContent = studentData.class || 'N/A';
-                document.getElementById('student-photo').src = studentData.photoUrl || `https://placehold.co/120x120/e2e8f0/e2e8f0?text=${(studentData.name || '').charAt(0)}`;
-                document.getElementById('date-of-issue').textContent = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+                document.getElementById('date-of-issue').textContent = new Date().toLocaleDateString('en-GB');
+                document.getElementById('student-photo').src = studentData.photoUrl || 'https://placehold.co/120x150/e2e8f0/e2e8f0?text=Photo';
 
                 const marksBody = document.getElementById('marks-body');
                 marksBody.innerHTML = '';
                 let totalMarksSum = 0, obtainedMarksSum = 0;
-                resultData.subjects.forEach(subject => {
+                resultData.subjects.forEach((subject, index) => {
                     const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-gray-50';
-                    tr.innerHTML = `<td class="p-3 font-medium">${subject.name}</td><td class="p-3 text-center">${subject.total}</td><td class="p-3 text-center font-semibold">${subject.obtained}</td>`;
+                    const subjectPercentage = (parseInt(subject.obtained, 10) / parseInt(subject.total, 10)) * 100;
+                    tr.className = index % 2 === 0 ? 'bg-white' : 'bg-red-50/50';
+                    tr.innerHTML = `
+                        <td class="p-3 font-medium text-gray-800">${subject.name}</td>
+                        <td class="p-3 text-center text-gray-700">${subject.total}</td>
+                        <td class="p-3 text-center font-semibold text-gray-900">${subject.obtained}</td>
+                        <td class="p-3 text-center font-bold text-gray-800">${calculateGrade(subjectPercentage)}</td>
+                    `;
                     marksBody.appendChild(tr);
                     totalMarksSum += parseInt(subject.total, 10);
                     obtainedMarksSum += parseInt(subject.obtained, 10);
                 });
                 document.getElementById('total-marks-sum').textContent = totalMarksSum;
                 document.getElementById('obtained-marks-sum').textContent = obtainedMarksSum;
-                const percentage = totalMarksSum > 0 ? ((obtainedMarksSum / totalMarksSum) * 100).toFixed(2) : 0;
-                document.getElementById('percentage').textContent = `${percentage}%`;
-                let grade = 'F';
-                if (percentage >= 90) grade = 'A+'; else if (percentage >= 80) grade = 'A'; else if (percentage >= 70) grade = 'B';
-                else if (percentage >= 60) grade = 'C'; else if (percentage >= 50) grade = 'D'; else if (percentage >= 40) grade = 'E';
-                document.getElementById('grade').textContent = grade;
+
+                const overallPercentage = totalMarksSum > 0 ? ((obtainedMarksSum / totalMarksSum) * 100).toFixed(2) : 0;
+                const overallGrade = calculateGrade(overallPercentage);
+
+                document.getElementById('percentage').textContent = `${overallPercentage}%`;
+                document.getElementById('grade').textContent = overallGrade;
+                
                 const finalResult = document.getElementById('final-result');
-                if(grade === 'F'){ finalResult.textContent = 'FAIL'; finalResult.className = 'font-bold text-2xl text-red-100 bg-red-600 px-6 py-1 rounded-full'; }
-                else { finalResult.textContent = 'PASS'; finalResult.className = 'font-bold text-2xl text-green-100 bg-green-600 px-6 py-1 rounded-full'; }
+                if(overallGrade === 'F'){ 
+                    finalResult.textContent = 'NEEDS IMPROVEMENT'; 
+                    finalResult.style.color = '#991B1B'; // text-red-800
+                    document.getElementById('promoted-class').parentElement.textContent = 'Student needs to improve.';
+                } else { 
+                    finalResult.textContent = 'PROMOTED'; 
+                    finalResult.style.color = '#282828';
+                    const currentClass = parseInt(studentData.class.match(/\d+/)[0]);
+                    if (!isNaN(currentClass)) {
+                        document.getElementById('promoted-class').textContent = `Class ${currentClass + 1}`;
+                    }
+                }
                 resultDisplay.classList.remove('hidden');
             } catch (error) { console.error("Error:", error); showError("An unexpected error occurred."); }
             finally { loader.style.display = 'none'; }
@@ -161,7 +249,7 @@
         downloadBtn.addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const resultCard = document.getElementById('result-card');
-            html2canvas(resultCard, { scale: 3 }).then(canvas => {
+            html2canvas(resultCard, { scale: 3, useCORS: true }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -180,7 +268,10 @@
                     document.getElementById('school-name').textContent = data.name;
                 }
                 if(data.logoUrl) {
-                    document.querySelectorAll('#header-school-logo, #school-logo, #school-logo-watermark').forEach(el => el.src = data.logoUrl);
+                    document.querySelectorAll('#header-school-logo, #school-logo, #school-logo-watermark').forEach(el => {
+                        el.src = data.logoUrl;
+                        el.crossOrigin = "anonymous";
+                    });
                 }
                 if(data.teacherSignatureUrl) document.getElementById('teacher-signature').src = data.teacherSignatureUrl;
                 if(data.principalSignatureUrl) document.getElementById('principal-signature').src = data.principalSignatureUrl;
