@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script>(function(s){s.dataset.zone='9939407',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduMark - Private School Result Portal</title>
@@ -11,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* All existing CSS remains the same */
         :root {
             --white: #ffffff;
             --red: #dc2626;
@@ -1024,6 +1024,54 @@
             transform: translateY(-5px);
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 2001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--red-dark);
+            transform: scale(1.1);
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -1295,7 +1343,7 @@
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Loading Results Portal...</div>
+        <div class="loading-text">Loading EduMark Portal</div>
         <div class="loading-progress">
             <div class="loading-progress-bar" id="loadingProgress"></div>
         </div>
@@ -1305,10 +1353,18 @@
     <header class="header" id="header">
         <nav class="nav">
             <a href="#" class="logo-container">
-                <img src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" alt="EduMark Logo" class="logo-img">
+                <div class="logo-img">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="40" height="40" rx="8" fill="#dc2626"/>
+                        <path d="M20 10L25 15L20 20L15 15L20 10Z" fill="white"/>
+                        <path d="M25 15L30 20L25 25L20 20L25 15Z" fill="white"/>
+                        <path d="M15 15L20 20L15 25L10 20L15 15Z" fill="white"/>
+                        <path d="M20 20L25 25L20 30L15 25L20 20Z" fill="white"/>
+                    </svg>
+                </div>
                 <span class="logo-text">EduMark</span>
             </a>
-            <ul class="nav-links" id="navLinks">
+            <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
@@ -1325,20 +1381,20 @@
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="animate-on-scroll">Your Academic <span>Success</span> Starts Here</h1>
-                <p class="subtitle animate-on-scroll">EduMark provides a seamless way to access your exam results, track your progress, and stay connected with your academic journey.</p>
+                <h1>Check Your <span>Academic Results</span> Online with EduMark</h1>
+                <p class="subtitle">EduMark provides a secure and efficient platform for students and parents to access academic results, track progress, and stay informed about educational achievements.</p>
                 <div class="hero-cta">
-                    <a href="#results" class="primary-btn animate-on-scroll animate-bounce">
-                        <i class="fas fa-graduation-cap"></i> Check Results
+                    <a href="#results" class="primary-btn">
+                        <i class="fas fa-chart-line"></i> Check Results
                     </a>
-                    <a href="#features" class="secondary-btn animate-on-scroll">
-                        <i class="fas fa-play-circle"></i> Learn More
+                    <a href="#about" class="secondary-btn">
+                        <i class="fas fa-info-circle"></i> Learn More
                     </a>
                 </div>
             </div>
-            <div class="hero-image animate-on-scroll">
+            <div class="hero-image">
                 <div class="hero-image-container">
-                    <img src="https://i.ibb.co/tTzTvZyn/pexels-pavel-danilyuk-8423089.jpg" alt="Students celebrating academic success">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Students celebrating academic success">
                 </div>
             </div>
         </div>
@@ -1349,58 +1405,52 @@
     <section class="features" id="features">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag animate-on-scroll animate-shake">Why Choose EduMark</span>
-                <h2 class="section-title animate-on-scroll">Designed for <span>Student Success</span></h2>
-                <p class="section-subtitle animate-on-scroll">Our platform provides everything you need to track and improve your academic performance with ease.</p>
+                <span class="section-tag">Why Choose EduMark</span>
+                <h2 class="section-title">Our <span>Key Features</span></h2>
+                <p class="section-subtitle">EduMark offers a comprehensive solution for academic result management with cutting-edge features designed for students, parents, and educators.</p>
             </div>
-            
             <div class="features-grid">
                 <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure & Private</h3>
+                    <p>Your academic data is protected with enterprise-grade security measures and strict privacy controls.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Instant Results</h3>
-                    <p>Get your exam results immediately after they are published. No more waiting in long queues or delays.</p>
+                    <h3>Instant Access</h3>
+                    <p>Get real-time results as soon as they are published, with no delays or waiting periods.</p>
                 </div>
-                
                 <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
-                        <i class="fas fa-lock"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
                     </div>
-                    <h3>Secure Access</h3>
-                    <p>Your academic data is protected with advanced security measures and encrypted connections.</p>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor academic performance over time with detailed analytics and visual progress reports.</p>
                 </div>
-                
                 <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
+                    <div class="feature-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <h3>Mobile Friendly</h3>
-                    <p>Access your results from any device - desktop, tablet, or smartphone with responsive design.</p>
+                    <p>Access your results from any device, anywhere, with our responsive design and mobile app.</p>
                 </div>
-                
                 <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
-                        <i class="fas fa-chart-line"></i>
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
                     </div>
-                    <h3>Progress Tracking</h3>
-                    <p>Monitor your academic progress over time with detailed analytics and performance insights.</p>
+                    <h3>Notifications</h3>
+                    <p>Receive instant alerts when new results are published or important announcements are made.</p>
                 </div>
-                
                 <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <h3>Digital Certificates</h3>
-                    <p>Download and print your certificates and mark sheets directly from the portal.</p>
-                </div>
-                
-                <div class="feature-card animate-on-scroll">
-                    <div class="feature-icon animate-flip">
+                    <div class="feature-icon">
                         <i class="fas fa-history"></i>
                     </div>
-                    <h3>Academic Records</h3>
-                    <p>Complete academic history and records available at your fingertips for future reference.</p>
+                    <h3>Historical Data</h3>
+                    <p>Access your complete academic history, including past results and performance trends.</p>
                 </div>
             </div>
         </div>
@@ -1411,38 +1461,36 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
-                    <h2 class="animate-on-scroll">About <span>EduMark</span></h2>
-                    <p class="animate-on-scroll">EduMark is a leading private educational institution committed to providing quality education and comprehensive academic services. Our result portal represents our dedication to transparency, accessibility, and student convenience.</p>
-                    <p class="animate-on-scroll">With years of experience in education and technology, we have created a seamless platform that bridges the gap between traditional education and modern digital solutions.</p>
-                    
+                    <h2>About <span>EduMark</span> Portal</h2>
+                    <p>EduMark is a leading educational technology platform designed to streamline academic result management for private schools. Our mission is to empower students, parents, and educators with transparent, accessible, and actionable academic data.</p>
+                    <p>Founded in 2015, EduMark has served over 500 schools and 200,000 students across the country. We are committed to innovation in educational technology and continuously improve our platform based on user feedback.</p>
                     <div class="about-stats">
-                        <div class="stat-item animate-on-scroll">
-                            <span class="stat-number">5000+</span>
-                            <span class="stat-label">Students</span>
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Partner Schools</span>
                         </div>
-                        <div class="stat-item animate-on-scroll">
-                            <span class="stat-number">15+</span>
-                            <span class="stat-label">Years Experience</span>
+                        <div class="stat-item">
+                            <span class="stat-number">200K+</span>
+                            <span class="stat-label">Students Served</span>
                         </div>
-                        <div class="stat-item animate-on-scroll">
+                        <div class="stat-item">
                             <span class="stat-number">98%</span>
-                            <span class="stat-label">Success Rate</span>
+                            <span class="stat-label">User Satisfaction</span>
                         </div>
-                        <div class="stat-item animate-on-scroll">
+                        <div class="stat-item">
                             <span class="stat-number">24/7</span>
-                            <span class="stat-label">Support</span>
+                            <span class="stat-label">Support Available</span>
                         </div>
                     </div>
                 </div>
-                
-                <div class="about-image animate-on-scroll">
+                <div class="about-image">
                     <div class="about-image-container">
-                        <img src="https://i.ibb.co/VcjJcB2d/pexels-einfoto-2350925.jpg" alt="EduMark school building">
+                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="EduMark team collaborating">
                     </div>
-                    <div class="about-badge animate-glow">
+                    <div class="about-badge">
                         <i class="fas fa-award"></i>
-                        <h4>Best School</h4>
-                        <p>2025 Award Winner</p>
+                        <h4>Best EdTech Solution 2023</h4>
+                        <p>Education Excellence Awards</p>
                     </div>
                 </div>
             </div>
@@ -1454,10 +1502,10 @@
         <div class="container">
             <div class="portal-container">
                 <div class="portal-card animate-on-scroll">
-                    <h2>Check Your <span>Results</span></h2>
-                    <p>Enter your credentials to access your academic results and certificates. Our secure portal ensures your data privacy and provides instant access to your academic records.</p>
-                    <button class="result-button animate-glow" id="resultButton">
-                        <i class="fas fa-search"></i> Check Results Now
+                    <h2>Check Your <span>Results Now</span></h2>
+                    <p>Access your academic results instantly with our secure portal. Enter your credentials to view your performance reports, grades, and teacher feedback.</p>
+                    <button class="result-button" id="resultButton">
+                        <i class="fas fa-external-link-alt"></i> Check Results Now
                     </button>
                 </div>
             </div>
@@ -1469,71 +1517,53 @@
         <div class="container">
             <div class="contact-content">
                 <div class="contact-info">
-                    <h2 class="animate-on-scroll">Get In <span>Touch</span></h2>
-                    
-                    <div class="contact-item animate-on-scroll">
+                    <h2>Get In <span>Touch</span></h2>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Our Location</h3>
+                            <p>123 Education Street,<br>Knowledge City, KC 12345</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-phone-alt"></i>
                         </div>
                         <div class="contact-details">
                             <h3>Phone Number</h3>
-                            <p><a href="tel:+918876001303">+91 8876001303</a></p>
+                            <p><a href="tel:+11234567890">+1 (123) 456-7890</a><br>Mon-Fri: 9:00 AM - 5:00 PM</p>
                         </div>
                     </div>
-                    
-                    <div class="contact-item animate-on-scroll">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Address</h3>
-                            <p>Barpeta Road, Assam, India</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item animate-on-scroll">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Office Hours</h3>
-                            <p>Monday - Saturday: 9:00 AM - 6:00 PM</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item animate-on-scroll">
+                    <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div class="contact-details">
-                            <h3>Email</h3>
-                            <p><a href="mailto:info@edumark.site">info@edumark.site</a></p>
+                            <h3>Email Address</h3>
+                            <p><a href="mailto:support@edumark.com">support@edumark.com</a><br>We respond within 24 hours</p>
                         </div>
                     </div>
                 </div>
-                
-                <div class="contact-form animate-on-scroll">
-                    <form onsubmit="handleFormSubmit(event)">
+                <div class="contact-form">
+                    <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
-                        
                         <div class="form-group">
                             <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" required>
                         </div>
-                        
                         <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
                         </div>
-                        
                         <div class="form-group">
                             <label for="message">Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
-                        
                         <button type="submit" class="submit-button">
                             <i class="fas fa-paper-plane"></i> Send Message
                         </button>
@@ -1548,10 +1578,18 @@
         <div class="footer-content">
             <div class="footer-about">
                 <div class="footer-logo">
-                    <img src="https://i.postimg.cc/1RrykwG3/Blue-and-White-Modern-School-Logo.gif" alt="EduMark Logo" class="footer-logo-img">
+                    <div class="footer-logo-img">
+                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#dc2626"/>
+                            <path d="M20 10L25 15L20 20L15 15L20 10Z" fill="white"/>
+                            <path d="M25 15L30 20L25 25L20 20L25 15Z" fill="white"/>
+                            <path d="M15 15L20 20L15 25L10 20L15 15Z" fill="white"/>
+                            <path d="M20 20L25 25L20 30L15 25L20 20Z" fill="white"/>
+                        </svg>
+                    </div>
                     <span class="footer-logo-text">EduMark</span>
                 </div>
-                <p>Empowering education through technology and innovation. EduMark provides cutting-edge solutions for academic institutions and students.</p>
+                <p>EduMark is a leading educational technology platform providing secure and efficient academic result management solutions for private schools.</p>
                 <div class="footer-social">
                     <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -1559,45 +1597,37 @@
                     <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-            
             <div class="footer-links">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#home">Home</a></li>
                     <li><a href="#features">Features</a></li>
                     <li><a href="#about">About Us</a></li>
-                    <li><a href="#results">Result Portal</a></li>
+                    <li><a href="#results">Results Portal</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </div>
-            
             <div class="footer-links">
                 <h3>Resources</h3>
                 <ul>
                     <li><a href="#">Help Center</a></li>
+                    <li><a href="#">User Guides</a></li>
+                    <li><a href="#">FAQs</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Support</a></li>
                 </ul>
             </div>
-            
             <div class="footer-newsletter">
                 <h3>Newsletter</h3>
-                <p>Subscribe to our newsletter to receive updates and important announcements.</p>
+                <p>Subscribe to our newsletter to receive updates on new features and educational resources.</p>
                 <form class="newsletter-form">
-                    <input type="email" placeholder="Your email address" class="newsletter-input" required>
-                    <button type="submit" class="newsletter-btn">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
+                    <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn"><i class="fas fa-paper-plane"></i></button>
                 </form>
             </div>
         </div>
-        
         <div class="footer-bottom">
-            <div class="copyright">
-                &copy; 2025 Copyright, All Right Reserved. Made with ❤️ by EduMark Dev
-            </div>
+            <div class="copyright">© 2023 EduMark. All rights reserved.</div>
             <div class="footer-legal">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Service</a>
@@ -1608,44 +1638,82 @@
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-chevron-up"></i>
     </div>
 
-    <!-- Embedded Result Portal Modal -->
-    <div id="resultModal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000;">
-        <div style="position: relative; width: 100%; height: 100%;">
-            <button id="closeModal" style="position: absolute; top: 20px; right: 20px; background: var(--red); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.5rem; cursor: pointer; z-index: 2001;">×</button>
-            <iframe id="resultIframe" src="" style="width: 100%; height: 100%; border: none;"></iframe>
+    <!-- Result Modal -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <iframe class="modal-iframe" id="resultIframe" src="" frameborder="0"></iframe>
         </div>
     </div>
 
     <script>
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            const backToTop = document.getElementById('backToTop');
+        // DOM Elements
+        const loadingScreen = document.getElementById('loadingScreen');
+        const loadingProgress = document.getElementById('loadingProgress');
+        const header = document.getElementById('header');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        const resultButton = document.getElementById('resultButton');
+        const resultModal = document.getElementById('resultModal');
+        const resultIframe = document.getElementById('resultIframe');
+        const closeModal = document.getElementById('closeModal');
+        const backToTop = document.getElementById('backToTop');
+        const contactForm = document.getElementById('contactForm');
+
+        // Loading Screen Simulation
+        window.addEventListener('load', () => {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingScreen.classList.remove('active');
+                    }, 500);
+                }
+                loadingProgress.style.width = `${progress}%`;
+            }, 200);
             
-            if (window.scrollY > 100) {
+            // Show loading screen immediately
+            loadingScreen.classList.add('active');
+        });
+
+        // Scroll Event for Header
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
-            
+
+            // Back to Top Button
             if (window.scrollY > 300) {
                 backToTop.classList.add('visible');
             } else {
                 backToTop.classList.remove('visible');
             }
+
+            // Animate on Scroll
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            animateElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('animated');
+                }
+            });
         });
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-        const navLinks = document.getElementById('navLinks');
-
-        mobileMenuToggle.addEventListener('click', function() {
+        // Mobile Menu Toggle
+        mobileMenuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            mobileMenuToggle.innerHTML = navLinks.classList.contains('active') ? 
-                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            mobileMenuToggle.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
         });
 
         // Close mobile menu when clicking on a link
@@ -1656,186 +1724,101 @@
             });
         });
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+        // Result Button Click - Open Modal with External URL
+        resultButton.addEventListener('click', () => {
+            // Set the iframe source to the external URL
+            resultIframe.src = 'https://emas.co4.in/?i=1';
+            
+            // Show the modal
+            resultModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
         });
 
-        // Back to top button
-        document.getElementById('backToTop').addEventListener('click', function() {
+        // Close Modal
+        closeModal.addEventListener('click', () => {
+            resultModal.style.display = 'none';
+            resultIframe.src = ''; // Clear iframe source
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+
+        // Close modal when clicking outside the iframe
+        resultModal.addEventListener('click', (e) => {
+            if (e.target === resultModal) {
+                resultModal.style.display = 'none';
+                resultIframe.src = ''; // Clear iframe source
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }
+        });
+
+        // Back to Top Button
+        backToTop.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
         });
 
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Contact form submission
-        function handleFormSubmit(event) {
-            event.preventDefault();
+        // Contact Form Submission
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             
-            // Get form data
-            const formData = new FormData(event.target);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const phone = formData.get('phone');
-            const message = formData.get('message');
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
             
             // Simple validation
-            if (!name || !email || !message) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-            
-            // Simulate form submission
-            alert(`Thank you for your message, ${name}! We will get back to you soon at ${email}.`);
-            event.target.reset();
-        }
-
-        // Add loading animation to buttons
-        document.querySelectorAll('.primary-btn, .secondary-btn, .result-button').forEach(button => {
-            button.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
-
-        // Animate stats counters
-        function animateCounter(element, target, duration = 2000) {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const suffix = element.textContent.match(/[+%]/)?.[0] || '';
-            
-            function updateCounter() {
-                start += increment;
-                if (start < target) {
-                    element.textContent = Math.floor(start) + suffix;
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    element.textContent = target + suffix;
-                }
-            }
-            
-            updateCounter();
-        }
-
-        // Trigger counter animations when stats come into view
-        const statsObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statNumber = entry.target.querySelector('.stat-number');
-                    if (statNumber && !statNumber.classList.contains('animated')) {
-                        statNumber.classList.add('animated');
-                        const text = statNumber.textContent;
-                        const number = parseInt(text.replace(/\D/g, ''));
-                        if (number) {
-                            animateCounter(statNumber, number);
-                        }
-                    }
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.stat-item').forEach(stat => {
-            statsObserver.observe(stat);
-        });
-
-        // Newsletter form submission
-        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input').value;
-            alert(`Thank you for subscribing with ${email}! You'll receive our newsletter soon.`);
-            this.reset();
-        });
-
-        // Add hover effects to feature cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Result button functionality with loading screen
-        const resultButton = document.getElementById('resultButton');
-        const loadingScreen = document.getElementById('loadingScreen');
-        const loadingProgress = document.getElementById('loadingProgress');
-        const resultModal = document.getElementById('resultModal');
-        const resultIframe = document.getElementById('resultIframe');
-        const closeModal = document.getElementById('closeModal');
-
-        resultButton.addEventListener('click', function() {
-            // Show loading screen
-            loadingScreen.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Simulate loading progress
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress > 100) progress = 100;
-                loadingProgress.style.width = `${progress}%`;
+            if (name && email && subject && message) {
+                // In a real application, you would send this data to a server
+                // For this demo, we'll just show an alert and reset the form
+                alert(`Thank you, ${name}! Your message has been sent successfully. We'll get back to you soon.`);
+                contactForm.reset();
                 
-                if (progress >= 100) {
-                    clearInterval(progressInterval);
-                    
-                    // Hide loading screen after a short delay
-                    setTimeout(() => {
-                        loadingScreen.classList.remove('active');
-                        
-                        // Show the result modal
-                        resultIframe.src = 'https://emas.co4.in/?i=1';
-                        resultModal.style.display = 'block';
-                    }, 500);
-                }
-            }, 200);
-        });
-
-        closeModal.addEventListener('click', function() {
-            resultModal.style.display = 'none';
-            resultIframe.src = '';
-            document.body.style.overflow = '';
-        });
-
-        // Close modal when clicking outside iframe
-        resultModal.addEventListener('click', function(e) {
-            if (e.target === resultModal) {
-                resultModal.style.display = 'none';
-                resultIframe.src = '';
-                document.body.style.overflow = '';
+                // Add a little animation to the submit button
+                const submitButton = contactForm.querySelector('.submit-button');
+                submitButton.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                submitButton.style.backgroundColor = '#10b981';
+                
+                setTimeout(() => {
+                    submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                    submitButton.style.backgroundColor = '';
+                }, 3000);
             }
         });
+
+        // Newsletter Form Submission
+        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.querySelector('.newsletter-input');
+            
+            if (input.value) {
+                // In a real application, you would send this to a server
+                input.value = '';
+                alert('Thank you for subscribing to our newsletter!');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize animations on page load
+        window.dispatchEvent(new Event('scroll'));
     </script>
 </body>
 </html>
