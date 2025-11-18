@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admissions | Greenwood International School</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <div class="logo">Greenwood Int. School</div>
+            <div class="menu-toggle">☰</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academics.html">Academics</a></li>
+                    <li><a href="admissions.html" class="active">Admissions</a></li>
+                    <li><a href="activities.html">Activities</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="container">
+        <h2>Admissions</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div>
+                <h3>Admission Procedure</h3>
+                <ol style="margin-left: 20px; margin-bottom: 20px;">
+                    <li>Fill out the online inquiry form.</li>
+                    <li>Schedule a campus tour.</li>
+                    <li>Submit application and documents.</li>
+                    <li>Student assessment/interview.</li>
+                    <li>Payment of fees upon acceptance.</li>
+                </ol>
+                
+                <h3>Fee Structure (Annual)</h3>
+                <table>
+                    <tr>
+                        <th>Grade Level</th>
+                        <th>Tuition Fee</th>
+                        <th>Term Fee</th>
+                    </tr>
+                    <tr>
+                        <td>Primary (1-5)</td>
+                        <td>$4,000</td>
+                        <td>$500</td>
+                    </tr>
+                    <tr>
+                        <td>Middle (6-8)</td>
+                        <td>$5,000</td>
+                        <td>$600</td>
+                    </tr>
+                    <tr>
+                        <td>High School (9-12)</td>
+                        <td>$6,500</td>
+                        <td>$750</td>
+                    </tr>
+                </table>
+                <p><a href="#" style="color: var(--primary-color); text-decoration: underline;">Download Prospectus PDF</a></p>
+            </div>
+
+            <div style="background: var(--white); padding: 30px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h3>Apply Online</h3>
+                <form>
+                    <label>Student Name</label>
+                    <input type="text" placeholder="Enter student name" required>
+                    
+                    <label>Grade Applying For</label>
+                    <select>
+                        <option>Grade 1</option>
+                        <option>Grade 2</option>
+                        <option>Grade 3</option>
+                        <option>High School</option>
+                    </select>
+
+                    <label>Parent Name</label>
+                    <input type="text" placeholder="Parent/Guardian name" required>
+
+                    <label>Email Address</label>
+                    <input type="email" placeholder="your@email.com" required>
+
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="(555) 000-0000" required>
+
+                    <button type="submit" class="btn">Submit Application</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <h3>Frequently Asked Questions</h3>
+            <details style="background: white; padding: 15px; margin-bottom: 10px; cursor: pointer;">
+                <summary style="font-weight: bold;">What is the age criteria for Grade 1?</summary>
+                <p style="margin-top: 10px;">The child must be 6 years old by September 1st of the academic year.</p>
+            </details>
+            <details style="background: white; padding: 15px; margin-bottom: 10px; cursor: pointer;">
+                <summary style="font-weight: bold;">Do you offer transportation?</summary>
+                <p style="margin-top: 10px;">Yes, we have a fleet of buses covering most city routes.</p>
+            </details>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">&copy; 2025 Greenwood International School.</div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
